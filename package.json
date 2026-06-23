@@ -12,15 +12,13 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
-    "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "vite",
     "prebuild": "svgo -r -f src/assets && imagemin \"src/assets/*.{jpg,png,jpeg}\" --out-dir=src/assets --plugin=pngquant --plugin=mozjpeg",
-    "build": "CI=false GENERATE_SOURCEMAP=false node --max-old-space-size=4096 node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -41,10 +39,14 @@
     ]
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
     "imagemin-cli": "^8.0.0",
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^10.0.0",
+    "postcss": "^8.4.49",
     "svgo": "^4.0.1",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.5"
   }
 }
