@@ -13,7 +13,7 @@ export const parseHtmlToReact = (htmlString) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
     
-    const safeTags = ['div', 'p', 'br', 'strong', 'em', 'span', 'b', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+    const safeTags = ['div', 'p', 'br', 'strong', 'em', 'span', 'b', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 'img'];
 
     const tagStyles = {
       ul: 'list-disc pl-6 my-4 space-y-2',
@@ -38,9 +38,30 @@ export const parseHtmlToReact = (htmlString) => {
           const children = Array.from(node.childNodes).map((child, idx) => 
             renderNode(child, idx)
           );
+          const props = { key, className: tagStyles[tagName] || undefined };
+          if (tagName === 'img') {
+            props.src = node.getAttribute('src');
+            props.alt = node.getAttribute('alt');
+            const styleAttr = node.getAttribute('style');
+            if (styleAttr) {
+              const styleObj = {};
+              styleAttr.split(';').forEach(ruleStr => {
+                const separatorIndex = ruleStr.indexOf(':');
+                if (separatorIndex !== -1) {
+                  const keyName = ruleStr.slice(0, separatorIndex).trim();
+                  const valName = ruleStr.slice(separatorIndex + 1).trim();
+                  if (keyName && valName) {
+                    const camelCaseRule = keyName.replace(/-./g, x => x[1].toUpperCase());
+                    styleObj[camelCaseRule] = valName;
+                  }
+                }
+              });
+              props.style = styleObj;
+            }
+          }
           return React.createElement(
             tagName,
-            { key, className: tagStyles[tagName] || undefined },
+            props,
             children.length > 0 ? children : null
           );
         }
