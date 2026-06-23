@@ -678,6 +678,7 @@
 import React, { useState, useRef } from 'react';
 import { useLocationContext } from '../context/LocationContext';
 import LocationSelector from './LocationSelector';
+import { useBooking } from '../hooks/useBooking';
 
 import { useNavigate, Link } from 'react-router-dom';
 import bgImage from '../assets/bg.svg';
@@ -736,6 +737,7 @@ const Navbar = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+  const handleBooking = useBooking();
 
   const { data: gamesData } = useGames();
   const apiGames = gamesData?.games || [];
@@ -752,7 +754,7 @@ const Navbar = () => {
 
   const handleClick = () => {
     setIsMobileMenuOpen(false);
-    window.open('https://ecom.roller.app/altitudemanteca/buyapass/en-us/home', '_blank');
+    handleBooking();
   };
 
   const chooseGameItems = apiGames
@@ -1207,7 +1209,7 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank");
+                    handleBooking();
                   }}
                   className="bg-[#E1017D] hover:bg-pink-600 text-white py-1 w-20 items-center rounded text-xs"
                 >
@@ -1215,7 +1217,7 @@ const Navbar = () => {
                 </button>
                 <button
                   onClick={() => {
-                    window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank");
+                    handleBooking();
                   }}
                   className="bg-[#00AACB] hover:bg-cyan-500 text-white py-1 w-20 rounded text-xs"
                 >
@@ -1315,7 +1317,7 @@ const Navbar = () => {
                       className="bg-[#E1017D] hover:bg-pink-600 text-white py-1 w-1/2 rounded text-xs"
                       onClick={() => {
                         setIsMobileMenuOpen(false);
-                        window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank");
+                        handleBooking();
                       }}
                     >
                       BOOK GAMES

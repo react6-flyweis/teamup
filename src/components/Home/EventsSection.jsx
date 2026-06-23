@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useBooking } from '../../hooks/useBooking';
 
 const EventsSection = ({ bg2, queen, king }) => {
+  const handleBooking = useBooking();
   return (
     <div className="flex justify-center px-4 mt-20 mb-0">
       <div
@@ -31,7 +33,7 @@ const EventsSection = ({ bg2, queen, king }) => {
             </p>
           </div>
           <button
-            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+            onClick={handleBooking}
             className="mt-10 px-10 py-4 bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 text-white font-bold rounded-full transition-all duration-300 text-xl shadow-lg uppercase"
           >
             Explore Events

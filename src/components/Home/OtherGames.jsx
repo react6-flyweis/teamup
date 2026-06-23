@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGames } from "../../hooks/useGames";
+import { useBooking } from "../../hooks/useBooking";
 
 const OtherGames = ({ excludeSlug, showHeading = true }) => {
   const { data, isLoading, error } = useGames();
+  const handleBooking = useBooking();
 
   if (isLoading) {
     return (
@@ -64,7 +66,7 @@ const OtherGames = ({ excludeSlug, showHeading = true }) => {
                 </h3>
                 <div className="w-full flex flex-row items-center gap-3">
                   <button 
-                    onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                    onClick={handleBooking}
                     className="flex-1 bg-[#00AACB] hover:bg-cyan-600 text-white py-3 text-[14px] md:text-[16px] font-bold rounded uppercase tracking-tighter"
                   >
                     BOOK NOW

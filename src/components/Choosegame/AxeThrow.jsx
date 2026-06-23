@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../Navbar'
+import { useBooking } from '../../hooks/useBooking'
 import per from '../../assets/per.svg'
 import clock2 from '../../assets/clock2.svg'
 import min from '../../assets/min.svg'
@@ -14,6 +15,7 @@ import OtherGames from '../Home/OtherGames'
 const duck = '/assets/axe4.svg'
 const texture = '/assets/texture.svg'
 const AxeThrow = () => {
+    const handleBooking = useBooking();
     const cards = [
         {
             icon: per,
@@ -118,7 +120,7 @@ const AxeThrow = () => {
                         AR AXE THROWING
                     </h1>
                     <button 
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         style={{ fontFamily: 'Posterama2001W04' }} 
                         className="text-base bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white rounded-full px-8 py-4 mt-14 md:text-[26px]"
                     >
@@ -359,7 +361,7 @@ const AxeThrow = () => {
                 <div className="flex justify-center mt-8">
                     <button
                         style={{ fontFamily: 'Posterama2001W04' }}
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         className="bg-[#00AACB] w-[180px] h-[60px] text-[15px] md:text-[17px] hover:bg-[#E1017D] hover:text-white text-white font-bold py-2 px-4 rounded-full transition-all duration-300 hover:scale-105"
                     >
                         BOOK NOW

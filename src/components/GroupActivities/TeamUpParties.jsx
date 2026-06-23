@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'; 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { motion } from 'framer-motion';
@@ -13,6 +14,7 @@ const checkIcon = (
 );
 
 const TeamUpParties = () => {
+  const handleBooking = useBooking();
   return (
     <div className="min-h-screen font-noir-pro">
       <Navbar />
@@ -40,7 +42,7 @@ const TeamUpParties = () => {
 
             <div className="flex justify-center items-center">
               <button 
-                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                onClick={handleBooking}
                 className="bg-[#00AACB] hover:bg-cyan-600 text-white font-bold py-3 px-8 text-lg rounded-full uppercase tracking-tighter w-56 transition-all"
               >
                 BOOK NOW
@@ -63,7 +65,7 @@ const TeamUpParties = () => {
 
               <div className="mt-12">
                 <button 
-                  onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                  onClick={handleBooking}
                   className="bg-[#E1017D] hover:bg-[#00AACB] text-white font-bold py-4 px-12 transition-all duration-300 text-xl tracking-widest uppercase rounded shadow-[0_0_15px_rgba(225,1,125,0.4)] hover:shadow-[0_0_20px_rgba(0,170,203,0.6)]"
                 >
                   Book Our Team Party

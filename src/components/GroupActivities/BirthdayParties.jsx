@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'; 
+import { useBooking } from '../../hooks/useBooking';
 import OtherGames from '../Home/OtherGames';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -14,6 +15,7 @@ const checkIcon = (
 );
 
 const BirthdayParties = () => {
+  const handleBooking = useBooking();
   const birthdayHero = "https://s40091.pcdn.co/uk/london-oxford-street/wp-content/uploads/sites/30/2022/04/BOOM-Birthdays-Web-Hero-Banner-1905x805-3.jpg.webp";
   
   return (
@@ -35,7 +37,7 @@ const BirthdayParties = () => {
           
           <div className="flex justify-center items-center">
             <button 
-              onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+              onClick={handleBooking}
               className="bg-[#00AACB] hover:bg-cyan-600 text-white font-bold py-3 px-8 text-lg rounded-full uppercase tracking-tighter w-56 transition-all"
             >
               BOOK NOW

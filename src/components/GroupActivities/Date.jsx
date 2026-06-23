@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
 import OtherGames from '../Home/OtherGames'
@@ -18,6 +19,7 @@ const queen = '/assets/Doe.svg'
 const king = '/assets/Stud.svg'
 const queenbg = '/assets/queenbg.svg'
 const DateNight = () => {
+  const handleBooking = useBooking();
 
     return (
         <>
@@ -70,7 +72,7 @@ const DateNight = () => {
                         
                         <div className="flex flex-col items-center gap-6">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="font-posterama bg-[#00AACB] hover:bg-[#E1017D] hover:scale-110 transition-all duration-300 text-white rounded-full px-10 py-3 text-lg md:text-xl font-black uppercase shadow-[0_0_20px_rgba(0,170,203,0.4)]"
                             >
                                 Book Now
@@ -192,7 +194,7 @@ const DateNight = () => {
                             100 AED per person. Minimum of 2 people per booking, larger groups welcome unchanged.
                         </p>
                         <button
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-lg sm:text-xl md:text-[26px] text-white font-semibold py-2 px-6 rounded-full w-max mt-6 md:mt-auto uppercase"
                         >
                             BOOK Now
@@ -226,7 +228,7 @@ const DateNight = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#00AACB] text-base sm:text-lg md:text-[26px] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full uppercase"
                             >
                                 BOOK NOW
@@ -290,7 +292,7 @@ const DateNight = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 md:mt-24 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#00AACB] text-base sm:text-lg md:text-[26px] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white font-semibold py-2 px-6 rounded-full uppercase"
                             >
                                 BOOK NOW

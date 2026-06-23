@@ -3,6 +3,7 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useBooking } from '../../hooks/useBooking';
 
 import heroBg from '../../assets/stepdown2.jpg';
 
@@ -73,6 +74,7 @@ const bundles = [
 
 const BoomBundle = () => {
   const navigate = useNavigate();
+  const handleBooking = useBooking();
   return (
     <div className="min-h-screen font-noir-pro">
       <Navbar />
@@ -174,7 +176,7 @@ const BoomBundle = () => {
                     
                     <div className="mt-auto flex gap-2">
                       <button 
-                        onClick={() => window.open(bundle.link, "_blank")}
+                        onClick={handleBooking}
                         className="flex-1 bg-[#00AACB] hover:bg-[#E1017D] text-white font-bold py-4 transition-colors duration-300 text-sm tracking-widest uppercase"
                       >
                         Book Now

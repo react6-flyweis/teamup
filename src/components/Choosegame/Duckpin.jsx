@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
  import { Link } from 'react-router-dom';
 import per from '../../assets/per.svg'
@@ -13,6 +14,7 @@ import OtherGames from '../Home/OtherGames'
 const duck = '/assets/duck.svg'
 const texture = '/assets/texture.svg'
 const Duckpin = () => {
+  const handleBooking = useBooking();
     const cards = [
         {
             icon: per,
@@ -117,7 +119,7 @@ const Duckpin = () => {
                         Duckpin Bowling
                     </h1>
                     <button 
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         className="bg-[#00AACB] hover:bg-cyan-600 text-white font-bold py-3 px-8 text-lg rounded-full uppercase tracking-tighter w-56 transition-all mt-14"
                     >
                         BOOK NOW
@@ -355,7 +357,7 @@ const Duckpin = () => {
                 </div>
                 <div className="flex justify-center mt-8">
                     <button 
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         style={{ fontFamily: 'Posterama2001W04' }} 
                         className="text-base bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white rounded-full px-8 py-4 mt-14 md:text-[26px]"
                     >

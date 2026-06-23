@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
 import Footer from '../Footer';
@@ -10,6 +11,7 @@ const throws = '/assets/throw.svg';
 const karaoke3 = '/assets/karaoke6.svg'
 const texture = '/assets/texture.svg'
 const Teamup = () => {
+  const handleBooking = useBooking();
     return (
         <>
             <div className="relative md:h-screen w-full overflow-hidden">
@@ -28,7 +30,7 @@ const Teamup = () => {
                     </h1>
                     <div className="mb-8">
                         <button 
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="bg-[#00AACB] hover:bg-cyan-600 text-white font-bold py-3 px-8 text-lg rounded-full uppercase tracking-tighter w-56 transition-all"
                         >
                             BOOK NOW
@@ -107,7 +109,7 @@ const Teamup = () => {
                             Rally your crew and let the games begin.
                         </p>
                         <button
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             style={{ fontFamily: 'Posterama2001W04' }}
                             className="bg-[#00AACB] hover:bg-[#E1017D] text-lg sm:text-xl md:text-[26px] text-white font-semibold py-2 px-6 rounded w-max mt-6 md:mt-auto"
                         >
@@ -147,7 +149,7 @@ const Teamup = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#E1017D] text-base sm:text-lg md:text-[26px] hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded"
                             >
                                 BOOK NOW
@@ -216,7 +218,7 @@ const Teamup = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 md:mt-24 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#E1017D] text-base sm:text-lg md:text-[26px] hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded"
                             >
                                 BOOK NOW
@@ -258,7 +260,7 @@ const Teamup = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#E1017D] text-base sm:text-lg md:text-[26px] hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded"
                             >
                                 BOOK NOW
@@ -327,7 +329,7 @@ const Teamup = () => {
                         </div>
                         <div className="mt-8 sm:mt-12 md:mt-24 flex flex-col sm:flex-row gap-4">
                             <button 
-                                onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                                onClick={handleBooking}
                                 className="bg-[#E1017D] text-base sm:text-lg md:text-[26px] hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded"
                             >
                                 BOOK NOW

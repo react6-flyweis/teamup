@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
 import OtherGames from '../Home/OtherGames'
@@ -14,6 +15,7 @@ const queen = '/assets/Doe.svg'
 const queenbg = '/assets/queenbg.svg'
 const texture = '/assets/texture.svg'
 const QueensNight = () => {
+  const handleBooking = useBooking();
     const items = [
         {
             title: '2 X GAMES',
@@ -81,7 +83,7 @@ const QueensNight = () => {
                     <div className="relative z-20 mt-8 flex flex-col items-center">
                         <h1 className="text-white text-3xl sm:text-[64px] font-bold mb-4 uppercase tracking-tighter">QUEENS NIGHT</h1>
                         <button 
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="text-base bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white rounded-full px-8 py-4 mt-8 md:text-[26px] font-bold"
                         >
                             Book Now

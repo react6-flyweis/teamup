@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useBooking } from '../../hooks/useBooking';
 
 const BookingSection = ({
   pro,
@@ -7,6 +8,7 @@ const BookingSection = ({
   clock,
   setShowModal,
 }) => {
+  const handleBooking = useBooking();
   return (
     <div id="booking-section" className="flex flex-col md:flex-row justify-center items-center md:h-[300px] gap-0.5 px-2 py-6 custom-ipad-mini-margin mt-12">
       <div className="w-full flex flex-col justify-center lg:flex-row gap-2 px-4 md:mt-24 md:mb-0 lg:px-0">
@@ -66,7 +68,7 @@ const BookingSection = ({
           </div>
           <button
             className="font-posterama bg-[#00AACB] w-full lg:w-[150px] h-[40px] text-[16px] hover:bg-cyan-600 text-black font-bold rounded mt-6 self-center"
-            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+            onClick={handleBooking}
           >
             RESERVE NOW
           </button>

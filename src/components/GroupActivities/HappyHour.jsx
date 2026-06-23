@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
 import Footer from '../Footer';
@@ -6,6 +7,7 @@ const happy = '/assets/happy.svg'
 const texture = '/assets/texture.svg'
 const cocktail = '/assets/cocktail.svg'
 const HappyHour = () => {
+  const handleBooking = useBooking();
     return (
         <>
             <div className="relative md:h-[80vh] w-full overflow-hidden">
@@ -27,7 +29,7 @@ const HappyHour = () => {
                     </div>
 
                     <button 
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         className="px-10 py-3 bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 text-white font-black rounded-full transition-all duration-300 text-lg shadow-[0_0_20px_rgba(0,170,203,0.4)] uppercase tracking-widest"
                     >
                         Book Now
@@ -203,7 +205,7 @@ const HappyHour = () => {
                     No Booking Required!
                 </p>
                 <button 
-                    onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                    onClick={handleBooking}
                     className="bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 text-white font-black px-10 py-4 rounded-full transition-all duration-300 text-lg shadow-lg uppercase tracking-widest"
                 >
                     Explore Menu

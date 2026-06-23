@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react' 
+import { useBooking } from '../../hooks/useBooking';
 import Navbar from '../Navbar'
 import pizza from '../../assets/pizza.svg'
 import beer from '../../assets/beer.svg'
@@ -19,6 +20,7 @@ const bg = '/assets/bg3.svg'
 const arrow = '/assets/arrow2.svg'
 
 const FoodCombos = () => {
+  const handleBooking = useBooking();
 
     const slideFromLeft = {
         hidden: { x: '-100vw', opacity: 0 },
@@ -244,7 +246,7 @@ const FoodCombos = () => {
                     </h1>
                     <div className="mb-8">
                         <button 
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="bg-[#00AACB] hover:bg-cyan-600 text-white font-bold py-3 px-8 text-lg rounded-full uppercase tracking-tighter w-56 transition-all"
                         >
                             BOOK NOW

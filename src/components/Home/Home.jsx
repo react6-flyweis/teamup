@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useBooking } from '../../hooks/useBooking';
 import vid from '../../assets/videos/vid.mp4';
 import bg from '../../assets/stepdown2.jpg';
 import Footer from '../Footer';
@@ -58,6 +59,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const handleBooking = useBooking();
 
   const bookingDetails = {
     date: 'April 19, 2025',
@@ -140,7 +142,7 @@ const Home = () => {
   }, [partyData.length]);
 
   const handleClick = () => {
-    window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank");
+    handleBooking();
   };
 
   const currentItem = partyData[current];

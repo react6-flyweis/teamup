@@ -4,6 +4,7 @@ import pizza from '../../assets/akar-icons_clock.svg'
 import beer from '../../assets/beer.svg'
 import burger from '../../assets/burger.svg'
 import { useNavigate } from 'react-router-dom';
+import { useBooking } from '../../hooks/useBooking';
 import glass from '../../assets/glasses.svg'
 import pint from '../../assets/pint.svg'
 import { motion } from 'framer-motion';
@@ -40,6 +41,7 @@ const Corporatebooking = () => {
     };
 
     const navigate = useNavigate();
+    const handleBooking = useBooking();
 
     return (
         <>
@@ -69,7 +71,7 @@ const Corporatebooking = () => {
                             The Ultimate Team Building Experience
                         </p>
                         <button 
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="text-lg bg-[#00AACB] hover:bg-[#E1017D] hover:scale-110 transition-all duration-300 text-white rounded-full px-12 py-5 md:text-[28px] font-extrabold uppercase shadow-[0_0_20px_rgba(0,170,203,0.5)]"
                         >
                             Book Now
@@ -166,7 +168,7 @@ const Corporatebooking = () => {
 
                 <div className="flex justify-center mt-12">
                     <button
-                        onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                        onClick={handleBooking}
                         className="bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white rounded-full px-12 py-4 text-xl font-bold uppercase shadow-lg"
                     >
                         BOOK NOW
@@ -207,7 +209,7 @@ const Corporatebooking = () => {
                             Ready to secure your corporate battleground? Our online booking system is quick, easy, and lets you choose the perfect time for your team to shine. Whether it's a small team outing or a larger department celebration, getting started is just a few clicks away.
                         </p>
                         <button 
-                            onClick={() => window.open("https://ecom.roller.app/altitudemanteca/buyapass/en-us/home", "_blank")}
+                            onClick={handleBooking}
                             className="bg-[#00AACB] hover:bg-[#E1017D] hover:scale-105 transition-all duration-300 text-white rounded-full px-8 py-3 text-lg font-bold w-max uppercase"
                         >
                             BOOK NOW
