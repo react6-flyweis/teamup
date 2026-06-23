@@ -16,12 +16,12 @@ const map = '/assets/map.svg'
 const about2 = '/assets/about3.svg'
 
 const Duckpin = () => {
-  const { data, isLoading } = useContentPage('about-us');
+  const { data, isLoading, isError } = useContentPage('about-us');
   const content = data?.page?.content;
 
   return (
     <>
-
+{/* ... */}
       <div className="relative md:h-screen w-full overflow-hidden">
         <Navbar />
         <div
@@ -68,7 +68,7 @@ const Duckpin = () => {
           <div style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
             {isLoading ? (
               <p>Loading...</p>
-            ) : content ? (
+            ) : isError ? null : content ? (
               parseHtmlToReact(content)
             ) : null}
           </div>

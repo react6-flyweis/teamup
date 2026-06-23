@@ -8,12 +8,12 @@ const duck = '/assets/terms.svg'
 const texture = '/assets/texture.svg'
 
 const Duckpin = () => {
-  const { data, isLoading } = useContentPage('terms-and-conditions');
+  const { data, isLoading, isError } = useContentPage('terms-and-conditions');
   const content = data?.page?.content;
 
   return (
     <>
-
+{/* ... */}
       <div className="relative md:h-screen w-full overflow-hidden">
         <Navbar />
         <div
@@ -61,7 +61,7 @@ const Duckpin = () => {
         <div className="text-black px-4 md:px-20 py-10 max-w-5xl mx-auto text-sm md:text-base leading-relaxed">
           {isLoading ? (
             <p className="text-center">Loading...</p>
-          ) : content ? (
+          ) : isError ? null : content ? (
             <div style={{ fontFamily: 'Noir Pro' }} className="space-y-4">
               {parseHtmlToReact(content)}
             </div>
