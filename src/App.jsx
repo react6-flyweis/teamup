@@ -46,6 +46,7 @@ const BirthdayParties = lazy(() => import('./components/GroupActivities/Birthday
 const TeamUpParties = lazy(() => import('./components/GroupActivities/TeamUpParties'));
 const Shufflecart = lazy(() => import('./components/Cart/Shufflecart'));
 const Waiver = lazy(() => import('./components/Waiver'));
+const DynamicGame = lazy(() => import('./components/Choosegame/DynamicGame'));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center h-screen bg-black">
@@ -107,6 +108,7 @@ const App = () => {
         {/* <Route path="/arcadecart" element={<Arcadecart />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/games/:slug" element={<DynamicGame />} />
       </Routes>
     </Suspense>
   );

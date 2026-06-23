@@ -13,3 +13,18 @@ export const useGames = () => {
     },
   });
 };
+
+/**
+ * Fetch a single game by slug from the API using TanStack Query.
+ */
+export const useGame = (slug) => {
+  return useQuery({
+    queryKey: ['game', slug],
+    queryFn: async () => {
+      const response = await api.get(`/api/games/${slug}`);
+      return response.data;
+    },
+    enabled: !!slug,
+  });
+};
+
