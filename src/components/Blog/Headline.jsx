@@ -1,0 +1,128 @@
+import React from 'react'
+import Navbar from '../Navbar'
+import { Link } from 'react-router-dom';
+import per from '../../assets/per.svg'
+import clock2 from '../../assets/clock2.svg'
+import min from '../../assets/min.svg'
+import lane from '../../assets/Vector (16).svg'
+import { motion } from 'framer-motion';
+import Footer from '../Footer'
+import dollar from '../../assets/dollar.svg'
+import wheel from '../../assets/wheel.svg'
+import Blogcards from './Blogcards'
+const duck = '/assets/game.svg'
+const texture = '/assets/texture.svg'
+const headline = '/assets/headline.svg'
+const headlines = '/assets/headline2.svg'
+const Duckpin = () => {
+
+    return (
+        <>
+
+            <div className="relative md:h-screen w-full overflow-hidden">
+                <Navbar />
+                <div
+                    style={{ backgroundImage: `url(${duck})` }}
+                    className="absolute top-12 left-0 w-full h-full bg-cover bg-center object-cover z-0"
+                ></div>
+
+                <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+
+                {/* Content */}
+                <div className="relative z-20 flex flex-col items-center justify-center md:h-full py-20 text-center px-4 text-white">
+                    <h1 style={{ fontFamily: 'Posterama2001W04' }} className="text-3xl md:text-[64px] font-semibold mb-4">
+                        Headline
+                    </h1>
+
+                    <div className="mt-6 animate-bounce">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-8 h-8 md:w-10 md:h-10 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="w-full bg-fixed bg-cover bg-center"
+                style={{ backgroundImage: `url(${texture})` }}>
+
+                <section className="text-center pt-12 px-4">
+                    <h2 style={{ fontFamily: 'Posterama2001W04' }} className="text-xl md:text-[44px] font-bold text-[#292524] mb-4 uppercase leading-tight tracking-wide">
+                        Sub Headline...
+                    </h2>
+
+                    <p style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    </p>
+                </section>
+                <div className=" text-gray-800 py-8 px-4">
+                    {/* Headline */}
+
+
+                    {/* Image */}
+                    <div className="my-6 flex justify-center">
+                        <img
+                            src={headline}
+                            alt="Party Cups"
+                            className="w-full max-w-3xl rounded shadow-lg"
+                        />
+                    </div>
+
+                    {/* Numbered List */}
+                    <div className="max-w-4xl mx-auto text-left">
+                        <ol className="list-decimal list-inside space-y-2 text-sm sm:text-base text-gray-800 font-medium">
+                            {Array.from({ length: 9 }, (_, i) => (
+                                <li key={i}>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
+                <div className=" text-gray-800 py-8 px-4">
+                    {/* Headline */}
+
+
+                    {/* Image */}
+                    <div className="my-6 flex justify-center">
+                        <img
+                            src={headlines}
+                            alt="Party Cups"
+                            className="w-full max-w-3xl rounded shadow-lg"
+                        />
+                    </div>
+
+                    {/* Numbered List */}
+                    <div className="max-w-4xl mx-auto text-left">
+                        <ol className="list-decimal list-inside space-y-2 text-sm sm:text-base text-gray-800 font-medium">
+                            {Array.from({ length: 9 }, (_, i) => (
+                                <li key={i}>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
+                <Blogcards/>
+            </div>
+
+
+
+            <Footer />
+
+        </>
+    )
+}
+
+export default Duckpin
