@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { useRegister } from '../../hooks/useRegister';
+import { useNewsletter } from '../../hooks/useNewsletter';
 
 // Validation schema
 const schema = z.object({
@@ -15,9 +15,7 @@ const schema = z.object({
     return isValidPhoneNumber(val);
   }, {
     message: 'Invalid phone number'
-  }),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  newsletterSubscribed: z.boolean().default(true)
+  })
 });
 
 const PromoModal = () => {
@@ -41,14 +39,22 @@ const PromoModal = () => {
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
-      password: '',
-      newsletterSubscribed: true
+      phone: ''
     }
   });
 
-  // Setup registration mutation
-  const registerMutation = useRegister();
+  // Setup newsletter subscription mutation
+  const subscribeMutation = useNewsletter();
+
+  const onSubmit = (data) => {
+    subscribeMutation.mutate({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      source: 'promo-modal',
+      optIn: true
+    });
+  };
 
 
   if (!isVisible) return null;
@@ -63,7 +69,7 @@ const PromoModal = () => {
           ×
         </button>
 
-        {registerMutation.isSuccess ? (
+        {subscribeMutation.isSuccess ? (
           <div className="text-center py-8">
             <h2
               style={{ fontFamily: 'Posterama2001W04' }}
@@ -91,7 +97,7 @@ const PromoModal = () => {
               SIGN UP TO RECEIVE 10% OFF YOUR FIRST GAME, NEWS & UPDATES
             </h2>
             
-            <form onSubmit={handleSubmit((data) => registerMutation.mutate(data))} className="space-y-4 text-left">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
               <div>
                 <label className="block text-sm font-semibold mb-1" style={{ fontFamily: 'Noir Pro' }}>
                   Name*
@@ -147,47 +153,24 @@ const PromoModal = () => {
                 )}
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-1" style={{ fontFamily: 'Noir Pro' }}>
-                  Password*
-                </label>
-                <input
-                  type="password"
-                  placeholder="Create a password"
-                  {...register('password')}
-                  className="w-full px-4 py-3 bg-white text-black rounded focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                />
-                {errors.password && (
-                  <p className="text-cyan-200 text-xs mt-1 font-medium">{errors.password.message}</p>
-                )}
-              </div>
 
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="newsletterSubscribed"
-                  {...register('newsletterSubscribed')}
-                  className="h-4 w-4 rounded text-pink-600 focus:ring-pink-500 border-gray-300"
-                />
-                <label htmlFor="newsletterSubscribed" className="ml-2 block text-xs font-medium text-white">
-                  Subscribe to news, updates, and special offers
-                </label>
-              </div>
 
-              {registerMutation.isError && (
+
+
+              {subscribeMutation.isError && (
                 <div className="bg-red-900/50 border border-red-500 rounded p-3 text-xs text-red-200">
-                  {registerMutation.error?.response?.data?.message || 'Registration failed. Please try again.'}
+                  {subscribeMutation.error?.response?.data?.message || 'Subscription failed. Please try again.'}
                 </div>
               )}
 
               <div className="flex justify-start">
                 <button
                   type="submit"
-                  disabled={registerMutation.isPending}
+                  disabled={subscribeMutation.isPending}
                   style={{ fontFamily: 'Posterama2001W04' }}
                   className="bg-black text-white px-8 py-3 mt-2 rounded font-bold hover:bg-gray-900 transition-colors uppercase text-sm disabled:opacity-50"
                 >
-                  {registerMutation.isPending ? 'Signing Up...' : 'SIGN UP'}
+                  {subscribeMutation.isPending ? 'Signing Up...' : 'SIGN UP'}
                 </button>
               </div>
             </form>
