@@ -682,38 +682,49 @@ import { useNavigate, Link } from 'react-router-dom';
 import bgImage from '../assets/bg.svg';
 import strike from '../assets/strike2.svg';
 import golf from '../assets/whacky.svg';
-import blaster from '../assets/Traced.svg';
 import axe from '../assets/Vector (42).svg';
 import target from '../assets/target2.svg';
 import dart from '../assets/Vector (43).svg';
-import golf2 from '../assets/golfd.svg';
-import arcade from '../assets/Vector (46).svg';
 import karaoke from '../assets/Vector (45).svg';
-import pool from '../assets/shuffles.svg';
 import hour from '../assets/Traced Image (1).svg';
 import confetti from '../assets/Vector (47).svg';
 import crown from '../assets/Vector (48).svg';
 import King from '../assets/Vector (49).svg';
 import food from '../assets/Vector (50).svg';
 import birds from '../assets/date3.svg';
-import live from '../assets/Vector (51).svg';
-import wine from '../assets/Vector (52).svg';
-import glass from '../assets/Vector (53).svg';
 import combo from '../assets/Vector (54).svg';
-import cart from '../assets/cart.svg';
-import twitter from '../assets/twitter.svg';
-import insta from '../assets/insta.svg';
 import fb3 from '../assets/fb3.svg';
 import insta2 from '../assets/insta2.svg';
 import google from '../assets/google.svg';
 import arrow from '../assets/arrow.svg';
-import fb from '../assets/fb.svg';
-import link from '../assets/fb.svg';
+// import blaster from '../assets/Traced.svg';
+// import golf2 from '../assets/golfd.svg';
+// import arcade from '../assets/Vector (46).svg';
+// import pool from '../assets/shuffles.svg';
+// import live from '../assets/Vector (51).svg';
+// import wine from '../assets/Vector (52).svg';
+// import glass from '../assets/Vector (53).svg';
+// import cart from '../assets/cart.svg';
+// import twitter from '../assets/twitter.svg';
+// import insta from '../assets/insta.svg';
+// import fb from '../assets/fb.svg';
+// import link from '../assets/fb.svg';
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa';
 import drinks_cocktails from '../assets/drinks_cocktails.svg';
+import { useGames } from '../hooks/useGames';
+
 const logo = '/assets/logo.svg';
 const baseball = '/assets/ball.svg';
 const texture = '/assets/texture.svg';
+
+const gameAssetMap = {
+  'indoor-mini-golf': { icon: golf, link: '/indoor' },
+  'duckpin-bowling': { icon: strike, link: '/duckpin' },
+  'axe-throw': { icon: axe, link: '/axethrow' },
+  'ar-archery': { icon: target, link: '/digi' },
+  'ar-darts': { icon: dart, link: '/darts' },
+  'karaoke-dance': { icon: karaoke, link: '/dance' }
+};
 
 const Navbar = () => {
   const { selectedLocation, setSelectedLocation, locations } = useLocationContext();
@@ -726,6 +737,9 @@ const Navbar = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+
+  const { data: gamesData } = useGames();
+  const apiGames = gamesData?.games || [];
 
   React.useEffect(() => {
     const handleClickOutside = (event) => {
@@ -749,16 +763,20 @@ const Navbar = () => {
     window.open('https://ecom.roller.app/altitudemanteca/buyapass/en-us/home', '_blank');
   };
 
+  const chooseGameItems = apiGames
+    .filter(game => game.isActive !== false)
+    .map(game => {
+      const mapping = gameAssetMap[game.slug] || {};
+      return {
+        name: game.name,
+        icon: game.imageUrl || mapping.icon || strike,
+        link: `/games/${game.slug}`,
+      };
+    });
+
+
   const menuItems = {
-    'Choose Game': [
-      { name: 'Indoor Mini Golf', icon: golf, link: '/indoor' },
-      { name: 'Duckpin Bowling', icon: strike, link: '/duckpin' },
-      { name: 'Axe Throw', icon: axe, link: '/axethrow' },
-      { name: 'AR Archery', icon: target, link: '/digi' },
-      { name: 'AR Darts', icon: dart, link: '/darts' },
-      { name: 'Karaoke Dance', icon: karaoke, link: '/dance' },
-      // { name: 'Arcade', icon: arcade, link: '/arcade' },
-    ],
+    'Choose Game': chooseGameItems,
     'Group Activities': [
       { name: 'Birthday Parties', icon: confetti, link: '/birthday' },
       { name: 'Team Up Parties', icon: confetti, link: '/team' },
