@@ -4,20 +4,25 @@
 
 .custom-drop-shadow {
 
-  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2)); 
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
 }
+
 .animated-stripes-container {
   position: relative;
   background-color: #E1017D;
   overflow: hidden;
 }
+
 .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
-          .hide-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-          }
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
 
 .stripes-content {
   position: relative;
@@ -33,33 +38,38 @@
 
 @media (width: 768px) {
   .custom-ipad-mini-margin {
-    margin-top: 8rem; /* mt-12 */
-    margin-bottom: 8rem; /* mb-12 */
+    margin-top: 8rem;
+    /* mt-12 */
+    margin-bottom: 8rem;
+    /* mb-12 */
   }
 }
 
 
 @font-face {
   font-family: 'Noir Pro';
-  src: url('/src/font/Noir_regular.otf') format('woff2');
+  src: url('/font/Noir_regular.otf') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Noir Semi';
-  src: url('/src/font/noirpro-semi-bold.woff2') format('woff2');
+  src: url('/font/noirpro-semi-bold.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Noir';
-  src: url('/src/font/noirpro-bold.woff2') format('woff2');
+  src: url('/font/noirpro-bold.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Posterama2001W04';
-  src: url('/src/font/Posterama-2001-W04-Regular.ttf') format('woff2');
+  src: url('/font/Posterama-2001-W04-Regular.ttf') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -107,6 +117,7 @@ body {
     transform: translateY(100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -136,6 +147,7 @@ body {
     opacity: 0;
     transform: translateY(-10px) translateZ(0);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) translateZ(0);
@@ -147,9 +159,9 @@ body {
     opacity: 0;
     transform: scaleY(0) translateZ(0);
   }
+
   to {
     opacity: 1;
     transform: scaleY(1) translateZ(0);
   }
 }
-
