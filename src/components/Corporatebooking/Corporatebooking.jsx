@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import glass from '../../assets/glasses.svg'
 import pint from '../../assets/pint.svg'
 import { motion } from 'framer-motion';
-import Cards from '../Home/Cards'
+import OtherGames from '../Home/OtherGames'
 import heart from '../../assets/heart.svg'
 import wings from '../../assets/wings.svg'
 import dollar from '../../assets/dollar2.svg'
@@ -253,7 +253,7 @@ const Corporatebooking = () => {
                 <h1 className="text-center text-2xl md:text-[44px] text-[#292524] mt-24 font-bold mb-8 uppercase tracking-tight">
                     OTHER GAMES
                 </h1>
-                <Cards />
+                <OtherGames />
             </div>
             <Footer />
         </>

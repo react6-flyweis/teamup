@@ -2,7 +2,7 @@
 import Navbar from './Navbar'
 import { Link } from 'react-router-dom';
 import video from '../assets/video.svg'
-import Cards from './Home/Cards'
+import OtherGames from './Home/OtherGames'
 import tick from '../assets/tick.svg'
 import Footer from './Footer';
 import { motion } from "framer-motion";
@@ -201,7 +201,7 @@ const Duckpin = () => {
           </p>
         </section>
 
-        <Cards />
+        <OtherGames showHeading={false} />
         <div
           className="relative w-full h-80 bg-cover bg-center mt-8"
           style={{ backgroundImage: `url(${map})` }}

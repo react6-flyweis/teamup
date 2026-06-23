@@ -1,5 +1,5 @@
 import React from 'react';
-import Cards from './Cards';
+import OtherGames from './OtherGames';
 
 const GameChoice = () => {
   return (
@@ -24,7 +24,7 @@ const GameChoice = () => {
         </p>
       </section>
 
-      <Cards />
+      <OtherGames showHeading={false} />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
-import Cards from '../Home/Cards'
+import OtherGames from '../Home/OtherGames'
 import check from '../../assets/check.svg'
 import Footer from '../Footer';
 import per from '../../assets/per.svg'
@@ -188,7 +188,7 @@ const KingsNight = () => {
                 <h1 className="text-center text-2xl md:text-[36px] text-[#292524] mt-12 font-bold mb-4">
                     OTHER GAMES
                 </h1>
-                <Cards/>
+                <OtherGames />
             </div>
             <Footer/>
         </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import GameGrid from '../Home/Cards';
+import OtherGames from '../Home/OtherGames';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { motion } from 'framer-motion';
@@ -112,7 +112,7 @@ const BirthdayParties = () => {
           <h2 className="font-posterama text-4xl md:text-6xl font-black text-black text-center mb-16 tracking-tighter uppercase leading-none">
             CHOOSE YOUR GAMES
           </h2>
-          <GameGrid />
+          <OtherGames showHeading={false} />
         </div>
       </section>
 

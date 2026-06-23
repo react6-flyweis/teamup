@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import Footer from '../Footer'
 import dollar from '../../assets/dollar.svg'
 import wheel from '../../assets/wheel.svg'
-import Cards from '../Home/Cards'
+import OtherGames from '../Home/OtherGames'
 const texture = '/assets/texture.svg'
 const Digi = () => {
     const cards = [
@@ -365,10 +365,7 @@ const Digi = () => {
                     </button>
                 </div>
 
-                <h1 style={{ fontFamily: 'Posterama2001W04' }} className="text-center text-2xl md:text-[44px] text-[#292524] mt-12 font-bold mb-4">
-                    OTHER GAMES
-                </h1>
-                <Cards />
+                <OtherGames />
             </div>
 
 

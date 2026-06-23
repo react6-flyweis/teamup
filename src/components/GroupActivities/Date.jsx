@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../Navbar'
 import { motion } from 'framer-motion';
-import Cards from '../Home/Cards'
+import OtherGames from '../Home/OtherGames'
 import Footer from '../Footer';
 import per from '../../assets/per.svg'
 import clock2 from '../../assets/clock2.svg'
@@ -427,7 +427,7 @@ const DateNight = () => {
                         We are strictly an over 18’s venue after 9pm.
                     </p>
                 </section>
-                <Cards />
+                <OtherGames showHeading={false} />
             </div>
             <Footer />
         </>

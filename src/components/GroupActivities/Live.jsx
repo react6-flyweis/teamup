@@ -5,7 +5,7 @@ import check from '../../assets/check.svg'
 import pro from '../../assets/pro.svg'
 import calendar from '../../assets/calender.svg'
 import clock from '../../assets/clock.svg'
-import Cards from '../Home/Cards'
+import OtherGames from '../Home/OtherGames'
 import Footer from '../Footer';
 const team = '/assets/liveSports.svg';
 const duckpin = '/assets/duckpin.svg'
@@ -201,7 +201,7 @@ const Teamup = () => {
                         We are strictly an over 18’s venue after 9pm.
                     </p>
                 </section>
-                <Cards />
+                <OtherGames showHeading={false} />
             </div>
             <Footer />
         </>
