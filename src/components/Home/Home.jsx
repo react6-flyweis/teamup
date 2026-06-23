@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import vid from '../../videos/vid.mp4';
+import vid from '../../assets/videos/vid.mp4';
 import bg from '../../assets/stepdown2.jpg';
-import pro from '../../assets/pro.svg';
-import calendar from '../../assets/calender.svg';
-import clock from '../../assets/clock.svg';
-import marker from '../../assets/marker.png.svg';
-import pin from '../../assets/pin.svg';
 import Footer from '../Footer';
 import PromoModal from './PromoModal';
+
+// import pro from '../../assets/pro.svg';
+// import calendar from '../../assets/calender.svg';
+// import clock from '../../assets/clock.svg';
+// import marker from '../../assets/marker.png.svg';
+// import pin from '../../assets/pin.svg';
 
 // Extracted Sections
 import Hero from './Hero';
@@ -16,7 +17,7 @@ import PartyCarousel from './PartyCarousel';
 import FindUs from './FindUs';
 import GameChoice from './GameChoice';
 import MenuSection from './MenuSection';
-import BookingSection from './BookingSection';
+// import BookingSection from './BookingSection';
 import BookingModals from './BookingModals';
 import EventsSection from './EventsSection';
 import SignupSection from './SignupSection';
