@@ -1,17 +1,1 @@
-<svg width="119" height="119" viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_186_23707)">
-<path d="M105.709 9.1706C101.489 4.90145 96.1162 1.95494 90.248 0.691584C84.3797 -0.571771 78.2705 -0.0971738 72.6677 2.0573C67.065 4.21178 62.2118 7.9527 58.7019 12.8223C55.192 17.6919 53.1777 23.4791 52.9055 29.4756L85.3728 61.9429C91.3655 61.6708 97.1492 59.6588 102.017 56.1528C106.885 52.6468 110.626 47.7988 112.783 42.2011C114.94 36.6034 115.42 30.4985 114.163 24.6326C112.907 18.7667 109.969 13.3938 105.709 9.1706ZM28.9528 63.9373L7.02546 85.8956C5.08826 87.8334 4 90.4612 4 93.2013C4 95.9413 5.08826 98.5691 7.02546 100.507L14.3311 107.813C16.2689 109.75 18.8968 110.838 21.6368 110.838C24.3768 110.838 27.0047 109.75 28.9425 107.813L50.8595 85.8956L72.7868 63.9683L50.8698 42.0513L28.9528 63.9373ZM36.6098 85.5029L29.3041 78.1973L50.8698 56.6626L58.1755 63.9683L36.6098 85.5029Z" fill="#00AACB"/>
-</g>
-<defs>
-<filter id="filter0_d_186_23707" x="0" y="0" width="118.848" height="118.838" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_186_23707"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_186_23707" result="shape"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="119" height="119" fill="none" viewBox="0 0 119 119"><g filter="url(#a)"><path fill="#00aacb" d="M105.709 9.17a30.877 30.877 0 0 0-52.803 20.306l32.467 32.467A30.875 30.875 0 0 0 105.709 9.17M28.953 63.938 7.025 85.896a10.333 10.333 0 0 0 0 14.611l7.306 7.306a10.334 10.334 0 0 0 14.612 0l21.916-21.917 21.928-21.928L50.87 42.051zm7.657 21.566-7.306-7.306L50.87 56.663l7.306 7.305z"/></g><defs><filter id="a" width="118.848" height="118.838" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="4"/><feGaussianBlur stdDeviation="2"/><feComposite in2="hardAlpha" operator="out"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow_186_23707"/><feBlend in="SourceGraphic" in2="effect1_dropShadow_186_23707" result="shape"/></filter></defs></svg>
