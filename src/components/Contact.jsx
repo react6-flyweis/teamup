@@ -3,10 +3,75 @@ import Navbar from './Navbar'
 import { useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import Footer from './Footer'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useContact } from '../hooks/useContact';
+
 const texture = '/assets/stepdown.svg'
+
+const contactSchema = z.object({
+  enquiryType: z.enum(['General', 'Support', 'Sales'], {
+    errorMap: () => ({ message: 'Please select an enquiry type' })
+  }),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(1, 'Phone number is required'),
+  dateOfBirth: z.string().min(1, 'Date of birth is required').refine((val) => {
+    const dob = new Date(val);
+    if (isNaN(dob.getTime())) return false;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    return age >= 13;
+  }, { message: 'You must be at least 13 years old' }),
+  location: z.string().min(1, 'Location is required'),
+  comment: z.string().min(1, 'Comment is required'),
+  source: z.string().default('contact-page')
+});
 
 const Contact = () => {
   const navigate = useNavigate();
+
+  const getMaxDate = () => {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 13);
+    return today.toISOString().split('T')[0];
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      enquiryType: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      dateOfBirth: '',
+      location: '',
+      comment: '',
+      source: 'contact-page'
+    }
+  });
+
+  const contactMutation = useContact();
+
+  const onSubmit = (data) => {
+    contactMutation.mutate(data, {
+      onSuccess: () => {
+        reset();
+      }
+    });
+  };
 
   return (
     <>
@@ -43,28 +108,66 @@ const Contact = () => {
         <div className=" bg-cover p-4 flex items-center justify-center">
           <div className=" w-full max-w-4xl p-6 rounded">
 
+            {contactMutation.isSuccess && (
+              <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded text-center">
+                <p className="font-bold">Thank you for contacting us!</p>
+                <p className="text-sm">We have received your message and will get back to you shortly.</p>
+              </div>
+            )}
 
-            <form className="space-y-4">
+            {contactMutation.isError && (
+              <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded text-center">
+                <p className="font-bold">Something went wrong.</p>
+                <p className="text-sm">{contactMutation.error?.response?.data?.message || 'Please try again later.'}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Enquiry Type */}
               <div>
                 <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Enquiry Type</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>Select your enquiry type...</option>
-                  <option>General</option>
-                  <option>Support</option>
-                  <option>Sales</option>
+                <select 
+                  {...register('enquiryType')}
+                  disabled={contactMutation.isPending}
+                  className="w-full border border-gray-300 rounded px-3 py-2 bg-white text-black"
+                >
+                  <option value="">Select your enquiry type...</option>
+                  <option value="General">General</option>
+                  <option value="Support">Support</option>
+                  <option value="Sales">Sales</option>
                 </select>
+                {errors.enquiryType && (
+                  <p className="text-red-500 text-xs mt-1 font-semibold">{errors.enquiryType.message}</p>
+                )}
               </div>
 
               {/* Name Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">First Name</label>
-                  <input type="text" placeholder="Enter your first name..." className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter your first name..." 
+                    {...register('firstName')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.firstName.message}</p>
+                  )}
                 </div>
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Last Name</label>
-                  <input type="text" placeholder="Enter your last name..." className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter your last name..." 
+                    {...register('lastName')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.lastName.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -72,11 +175,29 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Email</label>
-                  <input type="email" placeholder="Enter your email id..." className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email id..." 
+                    {...register('email')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.email.message}</p>
+                  )}
                 </div>
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Phone Number</label>
-                  <input type="tel" placeholder="Enter your phone number..." className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="tel" 
+                    placeholder="Enter your phone number..." 
+                    {...register('phone')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.phone.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -84,24 +205,54 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Date of Birth</label>
-                  <input type="date" className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="date" 
+                    max={getMaxDate()}
+                    {...register('dateOfBirth')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.dateOfBirth && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.dateOfBirth.message}</p>
+                  )}
                 </div>
                 <div>
                   <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Your Location</label>
-                  <input type="text" placeholder="Enter your location..." className="w-full border border-gray-300 rounded px-3 py-2" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter your location..." 
+                    {...register('location')}
+                    disabled={contactMutation.isPending}
+                    className="w-full border border-gray-300 rounded px-3 py-2" 
+                  />
+                  {errors.location && (
+                    <p className="text-red-500 text-xs mt-1 font-semibold">{errors.location.message}</p>
+                  )}
                 </div>
               </div>
 
               {/* Comment */}
               <div>
                 <label style={{ fontFamily: 'Noir Semi' }} className="block font-medium mb-1 text-[#292524]">Enter Your Comment</label>
-                <textarea placeholder="Enter your comment..." className="w-full border border-gray-300 rounded px-3 py-2 h-28 resize-none" />
+                <textarea 
+                  placeholder="Enter your comment..." 
+                  {...register('comment')}
+                  disabled={contactMutation.isPending}
+                  className="w-full border border-gray-300 rounded px-3 py-2 h-28 resize-none" 
+                />
+                {errors.comment && (
+                  <p className="text-red-500 text-xs mt-1 font-semibold">{errors.comment.message}</p>
+                )}
               </div>
 
               {/* Submit Button */}
               <div style={{ fontFamily: 'Posterama2001W04' }} className="text-right">
-                <button type="submit" className="bg-cyan-500 text-white px-6 py-2 rounded hover:bg-cyan-600 transition">
-                  SEND
+                <button 
+                  type="submit" 
+                  disabled={contactMutation.isPending}
+                  className="bg-cyan-500 text-white px-6 py-2 rounded hover:bg-cyan-600 transition disabled:opacity-50"
+                >
+                  {contactMutation.isPending ? 'SENDING...' : 'SEND'}
                 </button>
               </div>
             </form>
