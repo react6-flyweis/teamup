@@ -11,7 +11,11 @@ const FindUs = () => {
     'Eastvale': 'Eastvale, CA, USA'
   };
 
-  const currentAddress = addresses[selectedLocation.city] || '7683 Sunrise Blvd, Citrus Heights, CA 95610, USA';
+  const currentAddress = selectedLocation?.address
+    ? `${selectedLocation.address}, ${selectedLocation.city}, ${selectedLocation.state}`
+    : (selectedLocation?.city ? (addresses[selectedLocation.city] || '7683 Sunrise Blvd, Citrus Heights, CA 95610, USA') : '7683 Sunrise Blvd, Citrus Heights, CA 95610, USA');
+
+  const mapSrc = selectedLocation?.mapEmbedUrl || `https://www.google.com/maps?q=${encodeURIComponent(currentAddress)}&output=embed`;
 
   return (
     <div id="find-us" className="flex justify-center mt-20 px-4">
@@ -35,59 +39,72 @@ const FindUs = () => {
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
-                src={`https://www.google.com/maps?q=${encodeURIComponent(currentAddress)}&output=embed`}
+                src={mapSrc}
                 allowFullScreen
               ></iframe>
             </div>
           </div>
 
-
-
           {/* Opening Hours */}
           <div className="w-full md:w-[40%] flex flex-col justify-center">
             <div className="space-y-4 px-2 md:px-0">
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  MONDAY
-                </span>
-                <span>11:00 AM - 12:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  TUESDAY
-                </span>
-                <span>11:00 AM - 12:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  WEDNESDAY
-                </span>
-                <span>11:00 AM - 12:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  THURSDAY
-                </span>
-                <span>11:00 AM - 12:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  FRIDAY
-                </span>
-                <span>10:00 AM - 2:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  SATURDAY
-                </span>
-                <span>10:00 AM - 2:00 AM</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-noir font-semibold">
-                  SUNDAY
-                </span>
-                <span>10:00 AM - 12:00 AM</span>
-              </div>
+              {selectedLocation?.openingHours && selectedLocation.openingHours.length > 0 ? (
+                selectedLocation.openingHours.map((oh, idx) => (
+                  <div key={idx} className="flex justify-between">
+                    <span className="font-noir font-semibold uppercase">
+                      {oh.day}
+                    </span>
+                    <span>
+                      {oh.isClosed ? 'Closed' : `${oh.open} - ${oh.close}`}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      MONDAY
+                    </span>
+                    <span>11:00 AM - 12:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      TUESDAY
+                    </span>
+                    <span>11:00 AM - 12:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      WEDNESDAY
+                    </span>
+                    <span>11:00 AM - 12:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      THURSDAY
+                    </span>
+                    <span>11:00 AM - 12:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      FRIDAY
+                    </span>
+                    <span>10:00 AM - 2:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      SATURDAY
+                    </span>
+                    <span>10:00 AM - 2:00 AM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-noir font-semibold">
+                      SUNDAY
+                    </span>
+                    <span>10:00 AM - 12:00 AM</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

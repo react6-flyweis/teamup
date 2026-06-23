@@ -1,25 +1,60 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { useLocations } from '../hooks/useLocations';
 
 const LocationContext = createContext();
 
-export const locations = [
-  { city: 'Folsom', state: 'CA' },
-  { city: 'Citrus Heights', state: 'CA' },
-  { city: 'Eastvale', state: 'CA' },
-];
-
 export const LocationProvider = ({ children }) => {
+  const { data, isLoading } = useLocations();
+  const apiLocations = data?.locations || [];
+
   const [selectedLocation, setSelectedLocation] = useState(() => {
     const saved = localStorage.getItem('selectedLocation');
-    return saved ? JSON.parse(saved) : locations[1];
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // ignore
+      }
+    }
+    return null;
   });
 
   useEffect(() => {
-    localStorage.setItem('selectedLocation', JSON.stringify(selectedLocation));
+    if (apiLocations.length > 0) {
+      const saved = localStorage.getItem('selectedLocation');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          const found = apiLocations.find(
+            (loc) => loc.city === parsed.city && loc.state === parsed.state
+          );
+          if (found) {
+            setSelectedLocation(found);
+            return;
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      setSelectedLocation(apiLocations[0]);
+    }
+  }, [apiLocations]);
+
+  useEffect(() => {
+    if (selectedLocation) {
+      localStorage.setItem('selectedLocation', JSON.stringify(selectedLocation));
+    }
   }, [selectedLocation]);
 
   return (
-    <LocationContext.Provider value={{ selectedLocation, setSelectedLocation, locations }}>
+    <LocationContext.Provider
+      value={{
+        selectedLocation,
+        setSelectedLocation,
+        locations: apiLocations,
+        isLoading,
+      }}
+    >
       {children}
     </LocationContext.Provider>
   );
@@ -32,3 +67,4 @@ export const useLocationContext = () => {
   }
   return context;
 };
+

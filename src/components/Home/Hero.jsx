@@ -40,7 +40,7 @@ const Hero = ({ vid, handleClick }) => {
         <p
           className="font-noir-pro text-sm sm:text-base md:text-[36px] leading-normal mt-2 md:mt-8"
         >
-          {selectedLocation.city}, {selectedLocation.state}
+          {selectedLocation?.city && selectedLocation?.state ? `${selectedLocation.city}, ${selectedLocation.state}` : ''}
         </p>
 
 
