@@ -15,6 +15,19 @@ export const parseHtmlToReact = (htmlString) => {
     
     const safeTags = ['div', 'p', 'br', 'strong', 'em', 'span', 'b', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
+    const tagStyles = {
+      ul: 'list-disc pl-6 my-4 space-y-2',
+      ol: 'list-decimal pl-6 my-4 space-y-2',
+      li: 'list-item',
+      p: 'leading-relaxed mb-4',
+      h1: 'text-3xl font-bold mt-6 mb-4',
+      h2: 'text-2xl font-bold mt-6 mb-3',
+      h3: 'text-xl font-bold mt-4 mb-2',
+      h4: 'text-lg font-bold mt-4 mb-2',
+      h5: 'text-base font-bold mt-4 mb-1',
+      h6: 'text-sm font-bold mt-4 mb-1',
+    };
+
     const renderNode = (node, key) => {
       if (node.nodeType === 3) { // Node.TEXT_NODE
         return node.textContent;
@@ -27,7 +40,7 @@ export const parseHtmlToReact = (htmlString) => {
           );
           return React.createElement(
             tagName,
-            { key },
+            { key, className: tagStyles[tagName] || undefined },
             children.length > 0 ? children : null
           );
         }
