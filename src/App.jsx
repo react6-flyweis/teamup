@@ -48,6 +48,8 @@ const Shufflecart = lazy(() => import('./components/Cart/Shufflecart'));
 const Waiver = lazy(() => import('./components/Waiver'));
 const DynamicGame = lazy(() => import('./components/Choosegame/DynamicGame'));
 const ComingSoon = lazy(() => import('./components/ComingSoon'));
+const NotFound = lazy(() => import('./components/NotFound'));
+
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center h-screen bg-black">
@@ -111,6 +113,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/games/:slug" element={<DynamicGame />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
