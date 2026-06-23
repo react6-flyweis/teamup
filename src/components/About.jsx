@@ -1,12 +1,14 @@
-import React from 'react'
+// import { FaGamepad, FaCalendarAlt, FaUtensils, FaPlayCircle } from 'react-icons/fa';
 import Navbar from './Navbar'
 import { Link } from 'react-router-dom';
-import { FaGamepad, FaCalendarAlt, FaUtensils, FaPlayCircle } from 'react-icons/fa';
 import video from '../assets/video.svg'
 import Cards from './Home/Cards'
 import tick from '../assets/tick.svg'
 import Footer from './Footer';
 import { motion } from "framer-motion";
+import { useContentPage } from '../hooks/useContentPage';
+import { parseHtmlToReact } from '../utils/htmlParser';
+
 const duck = '/assets/about.svg'
 const texture = '/assets/texture.svg'
 const about = '/assets/about2.svg'
@@ -14,6 +16,8 @@ const map = '/assets/map.svg'
 const about2 = '/assets/about3.svg'
 
 const Duckpin = () => {
+  const { data, isLoading } = useContentPage('about-us');
+  const content = data?.page?.content;
 
   return (
     <>
@@ -30,7 +34,7 @@ const Duckpin = () => {
         {/* Content */}
         <div className="relative z-20 flex flex-col items-center justify-center md:h-full py-20 text-center px-4 text-white">
           <h1 style={{ fontFamily: 'Posterama2001W04' }} className="text-3xl md:text-[64px] font-semibold mb-4">
-       ABOUT US
+            ABOUT US
           </h1>
 
           <div className="mt-6 animate-bounce">
@@ -61,9 +65,13 @@ const Duckpin = () => {
             About Team up
           </h2>
 
-          <p style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-          </p>
+          <div style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : content ? (
+              parseHtmlToReact(content)
+            ) : null}
+          </div>
         </section>
         {/* <div className=" py-12 px-6 md:px-16 flex flex-col md:flex-row items-center justify-between">
 
