@@ -15,7 +15,11 @@ const FindUs = () => {
     ? `${selectedLocation.address}, ${selectedLocation.city}, ${selectedLocation.state}`
     : (selectedLocation?.city ? (addresses[selectedLocation.city] || '7683 Sunrise Blvd, Citrus Heights, CA 95610, USA') : '7683 Sunrise Blvd, Citrus Heights, CA 95610, USA');
 
-  const mapSrc = selectedLocation?.mapEmbedUrl || `https://www.google.com/maps?q=${encodeURIComponent(currentAddress)}&output=embed`;
+  const latitude = selectedLocation?.latitude;
+  const longitude = selectedLocation?.longitude;
+  const mapSrc = (typeof latitude === 'number' && typeof longitude === 'number')
+    ? `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`
+    : (selectedLocation?.mapEmbedUrl || `https://www.google.com/maps?q=${encodeURIComponent(currentAddress)}&output=embed`);
 
   return (
     <div id="find-us" className="flex justify-center mt-20 px-4">

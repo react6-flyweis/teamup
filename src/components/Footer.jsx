@@ -8,6 +8,7 @@ import mail from '../assets/mail.svg'
 import chat from '../assets/chat.svg'
 import fb from '../assets/facebook (6).svg'
 import { Link } from 'react-router-dom';
+import { useLocationContext } from '../context/LocationContext';
 
 import mic from '../assets/mic.svg'
 const logo = '/assets/logo.svg'
@@ -16,6 +17,7 @@ const avtar = '/assets/avtar.svg'
 
 const Footer = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { selectedLocation } = useLocationContext();
 
     return (
         <footer
@@ -56,14 +58,22 @@ const Footer = () => {
                                 Office Address
                             </p>
                             <p className="font-noir font-bold text-[#ABABAB] text-sm md:text-base leading-relaxed">
-                                70 Washington Square South, New<br className="hidden sm:block" /> York, NY 10012, United States
+                                {selectedLocation ? (
+                                    <>
+                                        {selectedLocation.address}, {selectedLocation.city},<br className="hidden sm:block" /> {selectedLocation.state}
+                                    </>
+                                ) : (
+                                    <>
+                                        70 Washington Square South, New<br className="hidden sm:block" /> York, NY 10012, United States
+                                    </>
+                                )}
                             </p>
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
                             <p className="font-noir font-bold flex items-center gap-3 text-[#ABABAB] text-sm md:text-base">
                                 <img src={symbol2} className="w-5 h-5 opacity-80" alt="Phone" />
-                                <span className="text-white font-bold">Phone:</span> 1800 100 8000
+                                <span className="text-white font-bold">Phone:</span> {selectedLocation?.phone || '1800 100 8000'}
                             </p>
                         </div>
                     </div>
