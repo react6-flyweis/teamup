@@ -645,7 +645,8 @@ const Navbar = () => {
             {/* Tipsy Thrills Section */}
             <div className="w-full py-2 px-4 text-center text-white animated-stripes-container animated-stripes">
               <div className="stripes-content">
-                <Link to="/brunchcart">
+                {/* <Link to="/brunchcart"> */}
+                <Link to="/coming-soon">
                   <span style={{ fontFamily: 'Noir' }} className="text-[16px] sm:text-[18px] uppercase">
                     Tipsy Thrills - Sips & Thrills Fri 15th Aug
                   </span>
