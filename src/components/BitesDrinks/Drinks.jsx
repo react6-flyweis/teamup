@@ -3,29 +3,31 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import bg from '../../assets/stepdown2.jpg'
 import cocktailIcon from '../../assets/glass3.svg';
+import { useDrinks } from '../../hooks/useDrinks';
+
 const bgImage = '/assets/bg3.svg';
 const banner = '/assets/cart2.svg'
 
 const Drinks = () => {
-  const cocktails = [
-    { name: 'OLD FASHIONED', desc: 'The old fashioned is a cocktail made by muddling sugar with bitters and water, adding whiskey or sometimes brandy.' },
-    { name: 'MARGARITA', desc: 'A margarita is a cocktail consisting of tequila, triple sec, and lime juice. Some margarita recipes include simple syrup as well.' },
-    { name: 'MANHATTAN', desc: 'A Manhattan is a cocktail made with whiskey, sweet vermouth, and bitters. While rye is the traditional whiskey of choice.' },
-    { name: 'MARTINI', desc: 'The martini is a cocktail made with gin and vermouth, and garnished with an olive, a lemon twist, or both.' },
-    { name: 'NEGRONI', desc: 'The negroni is a cocktail, made of equal parts gin, vermouth rosso, and Campari, generally served on the rocks.' },
-    { name: 'DAIQUIRI', desc: 'The daiquiri is a cocktail whose main ingredients are rum, citrus juice, and sugar or other sweetener.' },
-    { name: 'ESPRESSO MARTINI', desc: 'The espresso martini, also known as a vodka espresso, is a cold caffeinated alcoholic drink made with espresso.' },
-    { name: 'BLOODY MARY', desc: 'A Bloody Mary is a cocktail containing vodka, tomato juice, and other spices and flavorings including Worcestershire sauce.' },
-  ];
+  const { data, isLoading, error } = useDrinks();
 
-  const beers = [
-    { name: 'COORS', desc: 'Coors beer is a classic American brew known for its crisp, refreshing taste and smooth finish.' },
-    { name: 'GUINNESS', desc: 'Guinness is a legendary Irish stout, world-renowned for its deep ruby color, creamy head, and bold, roasted flavor.' },
-    { name: 'HEINEKEN', desc: 'Heineken is a world-famous Dutch lager, celebrated for its crisp, balanced flavor and signature green bottle.' },
-    { name: 'BAVARIA', desc: 'Bavaria beer is a premium Dutch brew with a rich brewing heritage dating back to 1719.' },
-    { name: 'Budweiser', desc: 'Budweiser is the King of Beers—an iconic American lager known for its smooth, clean taste and timeless appeal.' },
-    { name: 'Corona', desc: 'Corona is the ultimate summer beer, known for its light, crisp taste and signature clear bottle crowned with a lime.' },
-  ];
+  const drinksList = data?.drinks || [];
+
+  const cocktails = drinksList
+    .filter((drink) => drink.category === 'cocktails' && drink.isActive !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0))
+    .map((drink) => ({
+      name: drink.name,
+      desc: drink.description || '',
+    }));
+
+  const beers = drinksList
+    .filter((drink) => (drink.category === 'beers' || drink.category === 'beer') && drink.isActive !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0))
+    .map((drink) => ({
+      name: drink.name,
+      desc: drink.description || '',
+    }));
 
   return (
     <div className="min-h-screen">
@@ -55,12 +57,22 @@ const Drinks = () => {
                 <div>
                    <h3 className="font-posterama text-3xl text-[#E1017D] mb-8 uppercase tracking-widest border-l-4 border-[#E1017D] pl-4">Cocktails</h3>
                    <div className="space-y-8">
-                      {cocktails.map((item, idx) => (
+                      {isLoading ? (
+                        <div className="flex justify-center py-6">
+                          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#E1017D]"></div>
+                        </div>
+                      ) : error ? (
+                        <div className="text-red-500 py-4 font-semibold">Failed to load cocktails.</div>
+                      ) : cocktails.length === 0 ? (
+                        <div className="text-gray-500 py-4 font-semibold">No cocktails available.</div>
+                      ) : (
+                        cocktails.map((item, idx) => (
                           <div key={idx} className="group">
                               <h4 className="font-noir-semi text-xl md:text-2xl font-black text-[#292524] uppercase mb-2 group-hover:text-[#E1017D] transition-colors">{item.name}</h4>
                               <p className="font-noir-pro text-sm md:text-base text-[#292524]/80 leading-relaxed">{item.desc}</p>
                           </div>
-                      ))}
+                        ))
+                      )}
                    </div>
                 </div>
 
@@ -68,12 +80,22 @@ const Drinks = () => {
                 <div>
                    <h3 className="font-posterama text-3xl text-[#00AACB] mb-8 uppercase tracking-widest border-l-4 border-[#00AACB] pl-4">Beers & Draught</h3>
                    <div className="space-y-8">
-                      {beers.map((item, idx) => (
+                      {isLoading ? (
+                        <div className="flex justify-center py-6">
+                          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#00AACB]"></div>
+                        </div>
+                      ) : error ? (
+                        <div className="text-red-500 py-4 font-semibold">Failed to load beers.</div>
+                      ) : beers.length === 0 ? (
+                        <div className="text-gray-500 py-4 font-semibold">No beers available.</div>
+                      ) : (
+                        beers.map((item, idx) => (
                           <div key={idx} className="group">
                               <h4 className="font-noir-semi text-xl md:text-2xl font-black text-[#292524] uppercase mb-2 group-hover:text-[#00AACB] transition-colors">{item.name}</h4>
                               <p className="font-noir-pro text-sm md:text-base text-[#292524]/80 leading-relaxed">{item.desc}</p>
                           </div>
-                      ))}
+                        ))
+                      )}
                    </div>
                 </div>
              </div>
@@ -88,3 +110,4 @@ const Drinks = () => {
 };
 
 export default Drinks;
+
