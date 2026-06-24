@@ -13,3 +13,15 @@ export const useMenuItems = (params = {}) => {
     },
   });
 };
+
+export const useMenuItem = (slugOrId) => {
+  return useQuery({
+    queryKey: ['menuItem', slugOrId],
+    queryFn: async () => {
+      const response = await api.get(`/api/menu-items/${slugOrId}`);
+      return response.data?.menuItem;
+    },
+    enabled: !!slugOrId,
+  });
+};
+

@@ -47,6 +47,7 @@ const TeamUpParties = lazy(() => import('./components/GroupActivities/TeamUpPart
 const Shufflecart = lazy(() => import('./components/Cart/Shufflecart'));
 const Waiver = lazy(() => import('./components/Waiver'));
 const DynamicGame = lazy(() => import('./components/Choosegame/DynamicGame'));
+const DynamicActivity = lazy(() => import('./components/GroupActivities/DynamicActivity'));
 const ComingSoon = lazy(() => import('./components/ComingSoon'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
@@ -112,6 +113,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/games/:slug" element={<DynamicGame />} />
+        <Route path="/activities/:slug" element={<DynamicActivity />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
