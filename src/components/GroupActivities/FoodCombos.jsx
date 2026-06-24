@@ -19,215 +19,180 @@ const texture = '/assets/texture.svg'
 const bg = '/assets/bg3.svg'
 const arrow = '/assets/arrow2.svg'
 
+import { useMenuCategoryItems } from '../../hooks/useMenuItems';
+
 const FoodCombos = () => {
   const handleBooking = useBooking();
+  const { data, isLoading, error } = useMenuCategoryItems('street-food');
 
-    const slideFromLeft = {
-        hidden: { x: '-100vw', opacity: 0 },
-        visible: (i) => ({
-            x: 0,
-            opacity: 1,
-            transition: {
-                delay: i * 0.2,
-                duration: 0.8,
-                ease: 'easeOut',
-            },
-        }),
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4 text-center">
+        <h2 className="text-2xl mb-4 font-bold">Failed to load street food menu</h2>
+        <p className="text-gray-400 mb-6">{error.message || 'Something went wrong.'}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="bg-[#E1017D] px-6 py-2 rounded-full text-white font-bold"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  const apiItems = data?.items || [];
+
+  const slideFromLeft = {
+      hidden: { x: '-100vw', opacity: 0 },
+      visible: (i) => ({
+          x: 0,
+          opacity: 1,
+          transition: {
+              delay: i * 0.2,
+              duration: 0.8,
+              ease: 'easeOut',
+          },
+      }),
+  };
+
+  // Extract combos
+  const combos = apiItems
+    .filter(item => item.slug?.toLowerCase().startsWith('combo'))
+    .map(item => {
+      const items = item.description
+        ? item.description.split('.').map(s => s.trim()).filter(Boolean)
+        : [];
+      return {
+        title: item.name,
+        items: items
+      };
+    });
+
+  // Extract other categories dynamically
+  const mapApiItem = (apiItem) => {
+    const standardTags = [];
+    let specialTag = '';
+    
+    if (apiItem.tags && apiItem.tags.length > 0) {
+      apiItem.tags.forEach(t => {
+        if (t === 'V' || t === 'VG' || t === 'GF') {
+          standardTags.push(t);
+        } else {
+          specialTag = t;
+        }
+      });
+    }
+    
+    const tagsString = standardTags.length > 0 ? ` (${standardTags.join(', ')})` : '';
+    
+    return {
+      name: apiItem.name,
+      tags: tagsString,
+      tag: specialTag,
+      description: apiItem.description,
+      calories: apiItem.calories
     };
+  };
 
+  const streetFoodItems = [];
+  const onTheSideItems = [];
+  const wingsItems = [];
+  const saucesItems = [];
+  const burgersItems = [];
+  const loadedFriesItems = [];
 
+  apiItems.forEach(item => {
+    const slug = item.slug?.toLowerCase() || '';
+    if (slug.startsWith('combo')) {
+      return;
+    }
+    
+    const mapped = mapApiItem(item);
+    
+    if (slug.includes('wings')) {
+      wingsItems.push(mapped);
+    } else if (slug.includes('burger')) {
+      burgersItems.push(mapped);
+    } else if (slug.includes('fries') || slug.includes('tots')) {
+      if (slug.includes('bacon') || slug.includes('katsu')) {
+        loadedFriesItems.push(mapped);
+      } else {
+        onTheSideItems.push(mapped);
+      }
+    } else if (
+      slug.includes('bbq') ||
+      slug.includes('chilli') ||
+      slug.includes('mayonnaise') ||
+      slug.includes('baconnaise') ||
+      slug.includes('barbecue')
+    ) {
+      saucesItems.push(mapped);
+    } else {
+      streetFoodItems.push(mapped);
+    }
+  });
 
-    const combos = [
-        {
-            title: 'COMBO 1',
-            items: [
-                'The Buffalo Blaze',
-                '2 Bevvies Per Person Cocktail Upgrade Available',
-                'Big Boss Burger',
-                'Prosecco, Wine, Or Bottled Beer On Arrival',
-                'X',
-            ],
-        },
-        {
-            title: 'COMBO 2',
-            items: [
-                'Your Choice (1 pc)',
-                '3 Bevvies Per Person Cocktail Upgrade Available',
-                'Your Choice (2 pcs)',
-                'Prosecco, Wine, Or Bottled Beer On Arrival',
-                '1 Shot Per Person',
-            ],
-        },
-        {
-            title: 'COMBO 3',
-            items: [
-                'Your Choice (2 pcs)',
-                '4 Bevvies Per Person Cocktail Upgrade Available',
-                'Your Choice (4 pcs)',
-                'Prosecco, Wine, Or Bottled Beer On Arrival',
-                '1 Shot Per Person',
-            ],
-        },
-    ];
+  const categoryDescription = apiItems[0]?.categoryId?.description || '';
 
-    const menuData = [
-        {
-            icon: heart,
-            iconStyle: "top-[-34px] right-[36px]",
-            title: "STREET FOOD",
+  const menuData = [
+      {
+          icon: heart,
+          iconStyle: "top-[-34px] right-[36px]",
+          title: "STREET FOOD",
+          items: streetFoodItems,
+          sizeClass: { width: "w-full", height: "h-[426px]" },
+          positionStyle: "translate-x-0 translate-y-0",
+      },
+      {
+          icon: arrow,
+          iconStyle: "top-[-55px] right-[40px]",
+          title: "On The Side",
+          items: onTheSideItems,
+          sizeClass: { width: "w-full", height: "h-72" },
+          positionStyle: "translate-x-2 translate-y-[4px]",
+      },
+      {
+          icon: wings,
+          iconStyle: "top-[-10px] right-[1px]",
+          title: "Wings",
+          items: wingsItems,
+          sizeClass: { width: "w-full", height: "h-[250px]" },
+          positionStyle: "translate-x-[-5px] translate-y-[15px]",
+      },
+      {
+          icon: tube,
+          iconStyle: "top-[-60px] right-[135px] max-sm:right-[32px]",
+          title: "Sauces",
+          items: saucesItems,
+          sizeClass: { width: "w-full", height: "h-72" },
+          positionStyle: "translate-x-3 translate-y-[-14px]",
+      },
+      {
+          icon: burger2,
+          iconStyle: "top-[-20px] right-[35px] max-sm:right-[-22px]",
+          title: "BURGES",
+          items: burgersItems,
+          sizeClass: { width: "w-full", height: "h-[258px]" },
+          positionStyle: "translate-x-[-3px] translate-y-[25px]",
+      },
+      {
+          icon: chicken,
+          iconStyle: "top-[-40px] right-[10px] max-sm:right-[-22px]",
+          title: "FULLY LOADED FRIES",
+          items: loadedFriesItems,
+          sizeClass: { width: "w-full", height: "h-[300px]" },
+          positionStyle: "translate-x-5 translate-y-[24px]",
+      },
+  ];
 
-            items: [
-                {
-                    name: "HALLOUMI FRIES",
-                    description: "Candied red chillies, parsley & sweet chill sauce",
-                    calories: "515kcal"
-                },
-                {
-                    name: "PARMESAN & TRUFFLE MAC & CHEESE BITES",
-                    description: "Vegetarian parmesan, candied red chillies, spring onion & truffle mayonnaise",
-                    calories: "545kcal"
-                },
-                {
-                    name: "BATTERED PRAWN STARS",
-                    description: "Candied red chillies, spring onion, lemon wedge & sweet chilli sauce",
-                    calories: "675kcal"
-                },
-                {
-                    name: "6/9 PIECE CHICKEN TENDERS",
-                    description: "Honey, chilli-salt & your choice of dipping sauce",
-                    calories: "680kcal/1020kcal"
-                }
-            ],
-            sizeClass: { width: "w-full", height: "h-[426px]" },
-            positionStyle: "translate-x-0 translate-y-0",
-        },
-        {
-            icon: arrow,
-            iconStyle: "top-[-55px] right-[40px]",
-            title: "On The Side",
-
-            items: [
-                {
-                    name: "Fries (VG,GF)",
-                    description: "Salted fries ",
-                    calories: "335kcal"
-                },
-                {
-                    name: "Sweet Potato Fries (VG,GF)",
-                    description: "Golden syup & Chilli-salt",
-                    calories: "410kcal"
-                },
-                {
-                    name: "Tater Tots",
-                    description: "Golden syup & Chilli-salt (310kcal)",
-                    calories: "310kcal"
-                },
-
-            ],
-            sizeClass: { width: "w-full", height: "h-72" },
-            positionStyle: "translate-x-2 translate-y-[4px]",
-        },
-        {
-            icon: wings,
-            iconStyle: "top-[-10px] right-[1px]",
-            title: "Wings",
-            items: [
-                {
-                    name: "Chicken Wings (GF)",
-                    description: "Honey, chilli-salt & your choice of dipping sauce",
-                    calories: "485kcal"
-                },
-                {
-                    name: "Cauli Wings (VG)",
-                    description: "pink pickled onions, spring onion, candied red chillies & your choice of dipping sauce",
-                    calories: "385kcal"
-                },
-
-            ],
-            sizeClass: { width: "w-full", height: "h-[250px]" },
-            positionStyle: "translate-x-[-5px] translate-y-[15px]",
-        },
-        {
-            icon: tube,
-            iconStyle: "top-[-60px] right-[135px] max-sm:right-[32px]",
-            title: "Sauces",
-            items: [
-                {
-                    name: "Bull’s Eye BBQ (VG,GF)",
-                    tags: "(654kcal)",
-                    description: "",
-                    calories: "515kcal"
-                },
-                {
-                    name: "Sweet Chilli (VG,GF)",
-                    tags: "(80kcal)",
-                    description: "",
-                    calories: "545kcal"
-                },
-                {
-                    name: "Truffle Mayonnaise (V,GF)",
-                    tags: "(260kcal)",
-                    description: "",
-                    calories: "675kcal"
-                },
-                {
-                    name: "Smokey BACONNASISE (V,GF)",
-                    tags: "(198kcal)",
-                    description: "",
-                    calories: "680kcal/1020kcal"
-                },
-                {
-                    name: "Sticky Korean Barbecue (VG)",
-                    tags: "(69kcal)",
-                    description: "",
-                    calories: "680kcal/1020kcal"
-                }
-            ],
-            sizeClass: { width: "w-full", height: "h-72" },
-            positionStyle: "translate-x-3 translate-y-[-14px]",
-        },
-        {
-            icon: burger2,
-            iconStyle: "top-[-20px] right-[35px] max-sm:right-[-22px]",
-            title: "BURGES",
-            items: [
-                {
-                    name: "Fried Chicken Burger",
-                    description: "Brioche bun, sticky Korean barbecue, red gem lettuce & sliced red onion served with fries (1510kcal)",
-                    calories: "1510kcal"
-                },
-                {
-                    name: "Fried Cauli Burger (V)",
-                    description: "Brioche bun, sticky Korean barbecue, red gem lettuce & sliced red onion served with fries VG OPION AVAILABLE",
-                    calories: "1220kcal"
-                },
-
-            ],
-            sizeClass: { width: "w-full", height: "h-[258px]" },
-            positionStyle: "translate-x-[-3px] translate-y-[25px]",
-        },
-        {
-            icon: chicken,
-            iconStyle: "top-[-40px] right-[10px] max-sm:right-[-22px]",
-            title: "FULLY LOADED FRIES",
-            items: [
-                {
-                    name: "Bacon Parmesan",
-                    description: "Smokey baconnaise, bacon bits, crispy fried onions, pickled red onions & parmesan (960kcal)",
-                    calories: "960kcal"
-                },
-                {
-                    name: "Chicken Katsu",
-                    tag: "Swap chicken for cauli (VG)",
-                    description: "Chicken, katsu curry, salt & chilli mix, candied red chillies, pickled red onions & spring onion",
-                    calories: "987kcal/847kcal"
-                },
-
-            ],
-            sizeClass: { width: "w-full h-[300px]" },
-            positionStyle: "translate-x-5 translate-y-[24px]",
-        },
-    ];
     return (
         <>
             <Navbar />
@@ -280,9 +245,10 @@ const FoodCombos = () => {
                     </h2>
 
                     <p style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        {categoryDescription || "Discover our delicious selection of street food items, combos, and sides."}
                     </p>
                 </section>
+
 
                 {/* <div className="flex justify-center items-start gap-4 p-6 mt-12">
 
@@ -400,7 +366,7 @@ const FoodCombos = () => {
                     </h2>
 
                     <p style={{ fontFamily: 'Noir Semi' }} className="max-w-5xl mx-auto text-sm md:text-base text-[#292524]">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        {categoryDescription || "Explore our selection of wings, sauces, burgers, sides, and loaded fries."}
                     </p>
                 </section>
 
