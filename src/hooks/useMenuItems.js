@@ -25,3 +25,17 @@ export const useMenuItem = (slugOrId) => {
   });
 };
 
+export const useMenuCategoryItems = (categorySlug) => {
+  return useQuery({
+    queryKey: ['menuCategoryItems', categorySlug],
+    queryFn: async () => {
+      const response = await api.get('/api/menu/items', {
+        params: { categorySlug },
+      });
+      return response.data;
+    },
+    enabled: !!categorySlug,
+  });
+};
+
+
