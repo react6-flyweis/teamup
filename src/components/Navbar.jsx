@@ -51,6 +51,7 @@ const Navbar = () => {
   const handleBooking = useBooking();
 
   const { data: menuData } = useMenuItems();
+  const { data: groupActivitiesData } = useMenuItems({ section: 'group-activities' });
   const apiMenuItems = menuData?.menuItems || [];
 
   React.useEffect(() => {
@@ -77,20 +78,19 @@ const Navbar = () => {
       link: `/games/${item.slug}`,
     }));
 
+  const groupActivitiesItems = (groupActivitiesData?.menuItems || [])
+    .filter(item => item.isActive !== false)
+    .sort((a, b) => (a.order || 0) - (b.order || 0))
+    .map(item => ({
+      name: item.title,
+      icon: item.iconUrl || '',
+      link: `/activities/${item.slug}`,
+    }));
+
 
   const menuItems = {
     'Choose Game': chooseGameItems,
-    'Group Activities': [
-      { name: 'Birthday Parties', icon: confetti, link: '/birthday' },
-      { name: 'Team Up Parties', icon: confetti, link: '/team' },
-      { name: 'Boom Bundle', icon: combo, link: '/boom-bundles' },
-      { name: 'Queen Nights', icon: crown, link: '/queen' },
-      { name: 'King Nights', icon: King, link: '/king' },
-      { name: 'Date Night', icon: birds, link: '/date' },
-      { name: 'Happy Hour', icon: hour, link: '/happy' },
-      // { name: 'Fully Loaded Lunch Times', icon: food, link: '/food' },
-      // { name: 'Live Sports', icon: live, link: '/live' },
-    ],
+    'Group Activities': groupActivitiesItems,
     'Bites & Drinks': [
       { name: 'Drinks and Cocktails', icon: drinks_cocktails, link: '/cocktails' },
       { name: 'Street Food', icon: food, link: '/food' },
