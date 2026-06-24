@@ -18,7 +18,7 @@ const ComingSoon = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Target Date: September 1, 2026
-  const targetDate = new Date('2026-09-01T00:00:00').getTime();
+  const targetDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000 - 5 * 60 * 60 * 1000).getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
