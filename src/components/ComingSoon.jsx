@@ -11,14 +11,15 @@ const FEATURE_FLAGS = {
   showWaitlist: false
 };
 
+// Target Date: 30 days from now minus 5 hours
+const targetDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000 - 5 * 60 * 60 * 1000).getTime();
+
 const ComingSoon = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Target Date: September 1, 2026
-  const targetDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000 - 5 * 60 * 60 * 1000).getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
